@@ -1,0 +1,190 @@
+package Lab8;
+
+
+ import java.util.*;
+import java.text.*;
+
+/**
+ * Introduction to OOP with Java, McGraw-Hill
+ * 
+ * Main Control of Exercise 5.24
+ * 
+ * Version 2 - Uses MenuList
+ * 
+ * <p>
+ * The main control for the drive through application.
+ * 
+ * @author Dr. Caffeine
+ */
+class KayanCafe {
+
+	// ----------------------------------
+	// Data Members
+	// ----------------------------------
+
+	/**
+	 * Entree list
+	 */
+	
+	/**
+	 * Side dish list
+	 */
+
+
+	/**
+	 * Drink list
+	 */
+	private String drinkMenu;
+
+	/**
+	 * Order description
+	 */
+	private String order;
+
+	/**
+	 * Total price for all items
+	 */
+	private double billTotal;
+
+	/**
+	 * To format the numbers
+	 */
+	private DecimalFormat df;
+
+	/**
+	 * For user input
+	 */
+	private Scanner scanner;
+
+	/**
+	 * Constants
+	 */
+	private static final float CAFE_MOCHA_PRICE = 1.99f;
+	private static final float CAFE_LATTE_PRICE = 1.99f;
+	private static final float ESPRESSO_PRICE = 2.49f;
+	private static final float GREEN_TEA_PRICE = 0.99f;
+	
+
+	// ----------------------------------
+	// Constructors
+	// ----------------------------------
+
+	public KayanCafe() {
+		scanner = new Scanner(System.in);
+		
+		drinkMenu = "";
+		order = "Your Order:\n";
+		df = new DecimalFormat("0.00");
+
+		// Create the menu lists
+		setupDrinkList();
+	}
+
+	// -------------------------------------------------
+	// Public Methods:
+	// 
+	// void start ( )
+	//
+	// ------------------------------------------------
+
+	/**
+	 * Top level method that calls other private methods
+	 */
+	public void start() {
+		describeProgram();
+		getOrder();
+		displayOutput();
+	}
+
+	// -------------------------------------------------
+	// Private Methods:
+	// 
+	// void describeProgram ( )
+	// void displayOutput ( )
+	//    
+	// void getOrder ( )
+	//    
+	// void setupDrinkMenu ( )
+	// void setupEntreeMenu ( )
+	// void setupSideDishMenu ( )
+	//
+	// ------------------------------------------------
+
+	/**
+	 * Provides a brief explaination of the program to the user.
+	 */
+	private void describeProgram() {
+		System.out.println("Kayan cafe\n"
+				+ "Please select the drink \n"
+				+ "you want from the list. After each selection of\n"
+				+ "item, you will be prompted for how many. Enter \n"
+				+ "the number of selected item you want.\n"
+				+ "Enjoy and come again!\n");
+	}
+
+	/**
+	 * Display the input values and monthly and total payments.
+	 */
+	private void displayOutput() {
+		System.out.println(order);
+		System.out.println("\nTotal bill:       $ " + df.format(billTotal));
+	}
+
+	/**
+	 * Gets the order consisting of entree, side dish, and drink.
+	 */
+	private void getOrder() {
+		
+		getDrinkOrder();
+	}
+
+	/**
+	 * Sets up the drink list
+	 */
+	private void setupDrinkList() {
+		drinkMenu += " 1) Cafe Mocha     $" + CAFE_MOCHA_PRICE + "\n";
+		drinkMenu += " 2) Cafe Latte     $" + CAFE_LATTE_PRICE + "\n";
+		drinkMenu += " 3) Espresso       $" + ESPRESSO_PRICE + "\n";
+		drinkMenu += " 4) green tea     $" + GREEN_TEA_PRICE + "\n";
+	}
+
+	/**
+	 * Gets the drink order
+	 */
+	private void getDrinkOrder() {
+		int selected;
+		int orderCount;
+		String description = "";
+		double orderPrice = 0;
+
+		System.out.println("Enter the number for which "
+				+ "item you want:\n\n" + drinkMenu);
+
+		selected = scanner.nextInt();
+
+		// get the amount of the item
+		System.out.print("How many? ");
+		orderCount = scanner.nextInt();
+
+		if (selected == 1) {
+			description = "Cafe Mocha";
+			orderPrice = CAFE_MOCHA_PRICE * orderCount;
+		} else if (selected == 2) {
+			description = "Cafe Latte";
+			orderPrice = CAFE_LATTE_PRICE * orderCount;
+		} else if (selected == 3) {
+			description = "Espresso";
+			orderPrice = ESPRESSO_PRICE * orderCount;
+		} else if (selected == 4) {
+			description = "Oolong Tea";
+			orderPrice = GREEN_TEA_PRICE * orderCount;
+		} else {
+			System.out.println("ERROR: bad input");
+			System.exit(1);
+		}
+
+		billTotal += orderPrice;
+		order += "Drink:      " + orderCount + " " + description + " $"
+				+ df.format(orderPrice) + "\n";
+	}
+}
